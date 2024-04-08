@@ -1,15 +1,19 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React from 'react'
+
 import { useForm } from 'react-hook-form'
+import { yupResolver } from '@hookform/resolvers/yup'
+import * as yup from 'yup'
 import { Link } from 'react-router-dom'
 import Input from 'src/components/Input'
-import { getRules } from 'src/utils/rules'
+import { Schema, getRules, schema } from 'src/utils/rules'
 
-interface Formdata {
-  email: string
-  password: string
-  confirm_password: string
-}
+// interface Formdata {
+//   email: string
+//   password: string
+//   confirm_password: string
+// }
+type FormData = Schema
 
 export default function Register() {
   const {
@@ -18,7 +22,9 @@ export default function Register() {
     watch,
     getValues,
     formState: { errors }
-  } = useForm<Formdata>()
+  } = useForm<Schema>({
+    resolver: yupResolver(schema)
+  })
   const onSubmit = handleSubmit(
     (data) => {
       console.log(data)
@@ -45,7 +51,7 @@ export default function Register() {
                 type='email'
                 errorMessage={errors.email?.message}
                 placeholder='Email'
-                rules={rules.email}
+                // rules={rules.email}
               />
               {/* <div className='mt-8'>
                 <input
@@ -64,7 +70,7 @@ export default function Register() {
                 type='password'
                 errorMessage={errors.password?.message}
                 placeholder='Password'
-                rules={rules.password}
+                // rules={rules.password}
                 autoComplete='on'
               />
               {/* <div className='mt-2'>
@@ -85,7 +91,7 @@ export default function Register() {
                 type='password'
                 errorMessage={errors.confirm_password?.message}
                 placeholder='Confirm Password'
-                rules={rules.confirm_password}
+                // rules={rules.confirm_password}
                 autoComplete='on'
               />
               {/* <div className='mt-2'>

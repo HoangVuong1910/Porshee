@@ -8,7 +8,7 @@ interface InputProps {
   type: React.HTMLInputTypeAttribute
   placeholder?: string
   register: UseFormRegister<any>
-  rules: RegisterOptions | undefined
+  rules?: RegisterOptions | undefined
   errorMessage?: string
   autoComplete?: string
 }
