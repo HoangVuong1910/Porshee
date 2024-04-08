@@ -1,7 +1,9 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React from 'react'
 import { useForm } from 'react-hook-form'
 import { Link } from 'react-router-dom'
-import { rules } from 'src/utils/rules'
+import Input from 'src/components/Input'
+import { getRules } from 'src/utils/rules'
 
 interface Formdata {
   email: string
@@ -13,20 +15,39 @@ export default function Register() {
   const {
     register,
     handleSubmit,
+    watch,
+    getValues,
     formState: { errors }
   } = useForm<Formdata>()
-  const onSubmit = handleSubmit((data) => {
-    console.log(data)
-  })
-  console.log(errors)
+  const onSubmit = handleSubmit(
+    (data) => {
+      console.log(data)
+    },
+    (data) => {
+      const password = getValues('password')
+      console.log(password)
+    }
+  )
+  // console.log(errors)
+  const rules = getRules(getValues)
   return (
     <div className='bg-orange'>
-      <div className='max-w-7xl mx-auto px-4'>
+      <div className='container'>
+        {/* <div className='max-w-7xl mx-auto px-4'> */}
         <div className='grid grid-cols-1 lg:grid-cols-5 py-12 lg:py-32 lg:pr-10'>
           <div className='lg:col-span-2 lg:col-start-4'>
             <form className='p-10 rounded bg-white shadow-sm' onSubmit={onSubmit}>
               <div className='text-2xl'>Đăng ký</div>
-              <div className='mt-8'>
+              <Input
+                className='mt-8'
+                name='email'
+                register={register}
+                type='email'
+                errorMessage={errors.email?.message}
+                placeholder='Email'
+                rules={rules.email}
+              />
+              {/* <div className='mt-8'>
                 <input
                   type='email'
                   // name='email'
@@ -35,18 +56,39 @@ export default function Register() {
                   {...register('email', rules.email)}
                 />
                 <div className='mt-1 text-red-600 min-h-[1.25rem] text-sm'>{errors.email?.message}</div>
-              </div>
-              <div className='mt-2'>
+              </div> */}
+              <Input
+                className='mt-2'
+                name='password'
+                register={register}
+                type='password'
+                errorMessage={errors.password?.message}
+                placeholder='Password'
+                rules={rules.password}
+                autoComplete='on'
+              />
+              {/* <div className='mt-2'>
                 <input
                   type='password'
                   // name='password'
                   className='p-3 w-full outline-none border border-gray-300 focus:border-gray-500 rounded-sm focus: shadow-sm'
                   placeholder='Password'
+                  autoComplete='on'
                   {...register('password', rules.password)}
                 />
                 <div className='mt-1 text-red-600 min-h-[1.25rem] text-sm'>{errors.password?.message}</div>
-              </div>
-              <div className='mt-2'>
+              </div> */}
+              <Input
+                className='mt-2'
+                name='confirm_password'
+                register={register}
+                type='password'
+                errorMessage={errors.confirm_password?.message}
+                placeholder='Confirm Password'
+                rules={rules.confirm_password}
+                autoComplete='on'
+              />
+              {/* <div className='mt-2'>
                 <input
                   type='password'
                   // name='confirm_password'
@@ -55,7 +97,7 @@ export default function Register() {
                   {...register('confirm_password', rules.confirm_password)}
                 />
                 <div className='mt-1 text-red-600 min-h-[1.25rem] text-sm'>{errors.confirm_password?.message}</div>
-              </div>
+              </div> */}
               <div className='mt-2'>
                 <button
                   type='submit'
