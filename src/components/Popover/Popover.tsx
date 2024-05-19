@@ -14,18 +14,26 @@ import {
   FloatingArrow,
   arrow,
   useHover,
-  safePolygon
+  safePolygon,
+  type Placement
 } from '@floating-ui/react'
-import { AnimatePresence } from 'framer-motion'
+import { AnimatePresence, motion } from 'framer-motion'
 
 interface Props {
   children: React.ReactNode
   renderPopover: React.ReactNode
-  className: string
+  className?: string
   as?: ElementType
+  placement?: Placement
 }
 
-export default function Popover({ children, renderPopover, className, as: Element = 'div' }: Props) {
+export default function Popover({
+  children,
+  renderPopover,
+  className,
+  as: Element = 'div',
+  placement = 'bottom-end'
+}: Props) {
   const [isOpen, setIsOpen] = useState(false)
   const id = useId()
   const arrowRef = useRef(null)
@@ -38,6 +46,7 @@ export default function Popover({ children, renderPopover, className, as: Elemen
       flip(),
       shift()
     ],
+    placement: placement,
     whileElementsMounted: autoUpdate,
     open: isOpen,
     onOpenChange: setIsOpen
@@ -70,11 +79,13 @@ export default function Popover({ children, renderPopover, className, as: Elemen
                 // initial={{
                 //   opacity: 0,
                 //   transform: 'scale(0)',
-                //   x: '-50%',
-                //   y: '100'
+                //   position: 'relative',
+                //   top: '20px',
+                //   right: 0,
+                //   left: 0
                 // }}
-                // animate={{ opacity: 1, transform: 'scale(1)', x: '-50%', y: '0' }}
-                // exit={{ opacity: 0, transform: 'scale(0)', x: '-50%', y: '100' }}
+                // animate={{ opacity: 1, transform: 'scale(1)' }}
+                // exit={{ opacity: 0, transform: 'scale(0)' }}
                 // transition={{ duration: 0.2 }}
               >
                 <FloatingArrow ref={arrowRef} context={context} className='text-white' fill='white' />

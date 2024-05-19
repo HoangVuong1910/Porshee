@@ -8,7 +8,7 @@ export const Header = () => {
       <div className='container'>
         <div className='flex justify-end'>
           <Popover
-            as='span'
+            as='div'
             className='flex items-center py-1 hover:text-gray-300 cursor-pointerd'
             renderPopover={
               <div className='bg-white relative shadow-md rounded-sm border border-gray-300'>
@@ -123,26 +123,113 @@ export const Header = () => {
             </div>
           </form>
           <div className='col-span-1'>
-            <Link
-              to={'/'}
-              className='flex justify-center
-            '
+            <Popover
+              placement='bottom-end'
+              renderPopover={
+                <div className='bg-white relative shadow-md rounded-sm border border-gray-300 max-w-[400px] text-sm px-4 py-2'>
+                  {/* title  */}
+                  <div className='p-2'>
+                    <div className='text-gray-400 capitalize'>sản phẩm mới thêm</div>
+                  </div>
+                  {/* start container list product cart */}
+                  <div className='mt-4'>
+                    {/* Row Item Product Cart  */}
+                    <div className='mt-4 flex'>
+                      <div className='flex-shrink-0'>
+                        <img
+                          src='https://down-vn.img.susercontent.com/file/vn-11134207-7qukw-liwztvi0int83b_tn'
+                          alt='ảnh'
+                          className='w-11 h-11 object-cover'
+                        />
+                      </div>
+                      <div className='flex-grow ml-2 overflow-hidden'>
+                        <div className='truncate'>Set Đồ Đôi Couple Áo Phông Nam Váy Thun Nữ màu Xám</div>
+                      </div>
+                      <div className='ml-2 flex-shrink-0'>
+                        <span className='text-orange'>₫123.500</span>
+                      </div>
+                    </div>
+                    {/* Row Item Product Cart  */}
+                    <div className='mt-4 flex'>
+                      <div className='flex-shrink-0'>
+                        <img
+                          src='https://down-vn.img.susercontent.com/file/vn-11134207-7qukw-liwztvi0int83b_tn'
+                          alt='ảnh'
+                          className='w-11 h-11 object-cover'
+                        />
+                      </div>
+                      <div className='flex-grow ml-2 overflow-hidden'>
+                        <div className='truncate'>Set Đồ Đôi Couple Áo Phông Nam Váy Thun Nữ màu Xám</div>
+                      </div>
+                      <div className='ml-2 flex-shrink-0'>
+                        <span className='text-orange'>₫123.500</span>
+                      </div>
+                    </div>
+                    {/* Row Item Product Cart  */}
+                    <div className='mt-4 flex'>
+                      <div className='flex-shrink-0'>
+                        <img
+                          src='https://down-vn.img.susercontent.com/file/vn-11134207-7qukw-liwztvi0int83b_tn'
+                          alt='ảnh'
+                          className='w-11 h-11 object-cover'
+                        />
+                      </div>
+                      <div className='flex-grow ml-2 overflow-hidden'>
+                        <div className='truncate'>Set Đồ Đôi Couple Áo Phông Nam Váy Thun Nữ màu Xám</div>
+                      </div>
+                      <div className='ml-2 flex-shrink-0'>
+                        <span className='text-orange'>₫123.500</span>
+                      </div>
+                    </div>
+                    {/* Row Item Product Cart  */}
+                    <div className='mt-4 flex'>
+                      <div className='flex-shrink-0'>
+                        <img
+                          src='https://down-vn.img.susercontent.com/file/vn-11134207-7qukw-liwztvi0int83b_tn'
+                          alt='ảnh'
+                          className='w-11 h-11 object-cover'
+                        />
+                      </div>
+                      <div className='flex-grow ml-2 overflow-hidden'>
+                        <div className='truncate'>Set Đồ Đôi Couple Áo Phông Nam Váy Thun Nữ màu Xám</div>
+                      </div>
+                      <div className='ml-2 flex-shrink-0'>
+                        <span className='text-orange'>₫123.500</span>
+                      </div>
+                    </div>
+                  </div>
+                  {/* end container list product cart */}
+                  {/* footer popover cart  */}
+                  <div className='flex mt-6 items-center justify-between'>
+                    <div className='capitalize text-xs text-gray-500'>Thêm vào giỏ hàng</div>
+                    <button className='capitalize bg-orange text-white px-4 py-2 hover:bg-opacity-90 rounded-sm border-none outline-none'>
+                      Xem giỏ hàng
+                    </button>
+                  </div>
+                </div>
+              }
             >
-              <svg
-                xmlns='http://www.w3.org/2000/svg'
-                fill='none'
-                viewBox='0 0 24 24'
-                strokeWidth={1.5}
-                stroke='currentColor'
-                className='w-6 h-6  text-white'
+              <Link
+                to={'/'}
+                className='flex justify-center
+            '
               >
-                <path
-                  strokeLinecap='round'
-                  strokeLinejoin='round'
-                  d='M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z'
-                />
-              </svg>
-            </Link>
+                <svg
+                  xmlns='http://www.w3.org/2000/svg'
+                  fill='none'
+                  viewBox='0 0 24 24'
+                  strokeWidth={1.5}
+                  stroke='currentColor'
+                  className='w-6 h-6  text-white'
+                >
+                  <path
+                    strokeLinecap='round'
+                    strokeLinejoin='round'
+                    d='M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z'
+                  />
+                </svg>
+              </Link>
+            </Popover>
           </div>
         </div>
       </div>
