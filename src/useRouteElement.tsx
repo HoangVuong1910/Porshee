@@ -4,15 +4,16 @@ import ProductList from './pages/ProductList'
 import Login from './pages/Login'
 import Register from './pages/Register'
 import RegisterLayout from './layouts/RegisterLayout'
+import MainLayout from './layouts/MainLayout'
 
 export default function useRouteElement() {
   const routeElement = useRoutes([
     {
       path: '/',
       element: (
-        <RegisterLayout>
+        <MainLayout>
           <ProductList />
-        </RegisterLayout>
+        </MainLayout>
       )
     },
     {
