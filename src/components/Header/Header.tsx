@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import Popover from '../Popover'
@@ -51,7 +52,7 @@ export const Header = () => {
             renderPopover={
               <div className='bg-white relative shadow-md rounded-sm border border-gray-300'>
                 <Link
-                  to={'/'}
+                  to={'/profile'}
                   className='block py-2 px-3 hover:bg-slate-100 bg-white hover:text-cyan-500 w-full text-left border-none outline-none'
                 >
                   Tài khoản của tôi
