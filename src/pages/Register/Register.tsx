@@ -13,6 +13,7 @@ import { omit } from 'lodash'
 import { isAxiosUnprocessableEnityError } from 'src/utils/utils'
 import { ErrorResponse } from 'src/types/utils.type'
 import { AppContext } from 'src/contexts/app.context'
+import Button from 'src/components/Button'
 
 // interface Formdata {
 //   email: string
@@ -146,12 +147,14 @@ export default function Register() {
                 <div className='mt-1 text-red-600 min-h-[1.25rem] text-sm'>{errors.confirm_password?.message}</div>
               </div> */}
               <div className='mt-2'>
-                <button
+                <Button
                   type='submit'
                   className='w-full text-center py-4 px-2 uppercase bg-red-500 text-white text-sm hover:bg-red-600'
+                  isLoading={registerAccountMutation.isPending}
+                  disabled={registerAccountMutation.isPending}
                 >
                   Đăng Ký
-                </button>
+                </Button>
               </div>
               <div className='flex items-center justify-center mt-8'>
                 <span className='[text-gray-400'>Bạn đã có tài khoản?</span>
