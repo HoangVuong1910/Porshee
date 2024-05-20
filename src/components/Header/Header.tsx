@@ -5,13 +5,15 @@ import Popover from '../Popover'
 import { useMutation } from '@tanstack/react-query'
 import { logoutAccount } from 'src/apis/auth.api'
 import { AppContext } from 'src/contexts/app.context'
+import path from 'src/constants/path'
 
 export const Header = () => {
-  const { setIsAuthenticated, isAuthenticated } = useContext(AppContext)
+  const { setIsAuthenticated, isAuthenticated, setProfile, profile } = useContext(AppContext)
   const logoutMutation = useMutation({
     mutationFn: logoutAccount,
     onSuccess: () => {
       setIsAuthenticated(false)
+      setProfile(null)
     }
   })
   const handleLogout = () => {
@@ -23,7 +25,7 @@ export const Header = () => {
         <div className='flex justify-end'>
           <Popover
             as='div'
-            className='flex items-center py-1 hover:text-gray-300 cursor-pointerd'
+            className='flex items-center py-1 hover:text-white/70 cursor-pointerd'
             renderPopover={
               <div className='bg-white relative shadow-md rounded-sm border border-gray-300'>
                 <div className='flex flex-col py-2 px-3'>
@@ -61,11 +63,11 @@ export const Header = () => {
           </Popover>
           {isAuthenticated && (
             <Popover
-              className='flex items-center py-1 hover:text-gray-300 cursor-pointer ml-6'
+              className='flex items-center py-1 hover:text-white/70 cursor-pointer ml-6'
               renderPopover={
                 <div className='bg-white relative shadow-md rounded-sm border border-gray-300'>
                   <Link
-                    to={'/profile'}
+                    to={path.profile}
                     className='block py-2 px-3 hover:bg-slate-100 bg-white hover:text-cyan-500 w-full text-left border-none outline-none'
                   >
                     Tài khoản của tôi
@@ -92,22 +94,22 @@ export const Header = () => {
                   className='w-full h-full object-cover rounded-full'
                 />
               </div>
-              <div className='text-white'>Vương Huy Hoàng</div>
+              <div className='text-white'>{profile?.name}</div>
             </Popover>
           )}
           {!isAuthenticated && (
             <div className='flex items-center'>
-              <Link to={'/register'} className='mx-3 capitalize hover:text-white/70'>
+              <Link to={path.register} className='mx-3 capitalize hover:text-white/70'>
                 Đăng ký
               </Link>
               <div className='border-r-[1px] border-r-white/40 h-4'></div>
-              <Link to={'/login'} className='mx-3 capitalize hover:text-white/70'>
+              <Link to={path.login} className='mx-3 capitalize hover:text-white/70'>
                 Đăng nhập
               </Link>
             </div>
           )}
 
-          {/* <div className='flex items-center py-1 hover:text-gray-300 cursor-pointer ml-6'>
+          {/* <div className='flex items-center py-1 hover:text-white/70 cursor-pointer ml-6'>
             <div className='w-6 h-6 mr-2 flex-shrink-0'>
               <img
                 src='https://scontent.fhan4-1.fna.fbcdn.net/v/t39.30808-1/432771471_1743907719418176_7640784265989700687_n.jpg?stp=dst-jpg_p200x200&_nc_cat=105&ccb=1-7&_nc_sid=5f2048&_nc_ohc=gHO0teLrOMkQ7kNvgE_XaEO&_nc_ht=scontent.fhan4-1.fna&oh=00_AfDP2ftCk7ufz5uDOy1VdfO937ey6s-e22qTcbuvHKNs7g&oe=663E54AF'
