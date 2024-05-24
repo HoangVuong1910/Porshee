@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import ProductRating from 'src/components/ProductRating'
 import { Product as ProductType } from 'src/types/product.type'
 import { formatCurrency, formatNumberToSocialStyle } from 'src/utils/utils'
 
@@ -35,7 +36,7 @@ export default function Product({ product }: Props) {
           </div>
           {/* rating  */}
           <div className='mt-3 flex items-center justify-end'>
-            <div className='flex items-center'>
+            {/* <div className='flex items-center'>
               <div className='relative'>
                 <div className='absolute top-0 left-0 h-full overflow-hidden ' style={{ width: '50%' }}>
                   <svg
@@ -68,7 +69,9 @@ export default function Product({ product }: Props) {
                   ></polygon>
                 </svg>
               </div>
-            </div>
+            </div> */}
+
+            <ProductRating rating={product.rating} />
             {/* sold  */}
             <div className='ml-2 text-sm'>
               <span>Đã bán</span>
