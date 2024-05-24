@@ -6,7 +6,7 @@ import * as yup from 'yup'
 import { Link, useNavigate } from 'react-router-dom'
 import { Schema, getRules, loginSchema, schema } from 'src/utils/rules'
 import { useMutation } from '@tanstack/react-query'
-import { loginAccount, registerAccount } from 'src/apis/auth.api'
+import authApi from 'src/apis/auth.api'
 import { omit } from 'lodash'
 import { isAxiosUnprocessableEnityError } from 'src/utils/utils'
 import { ErrorResponse } from 'src/types/utils.type'
@@ -29,7 +29,7 @@ export default function Login() {
   })
 
   const loginAccountMutation = useMutation({
-    mutationFn: (body: FormData) => loginAccount(body)
+    mutationFn: (body: FormData) => authApi.loginAccount(body)
   })
 
   const onSubmit = handleSubmit((data) => {
