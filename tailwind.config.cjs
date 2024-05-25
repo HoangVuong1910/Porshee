@@ -26,7 +26,7 @@ export default {
           paddingLeft: theme('spacing.4')
         }
       })
-    }),
-    require('@tailwindcss/line-clamp')
+    })
+    // require('@tailwindcss/line-clamp')
   ]
 }
