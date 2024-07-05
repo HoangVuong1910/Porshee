@@ -13,7 +13,7 @@ class Http {
   constructor() {
     this.accessToken = getAccessTokenFromLS()
     this.instance = axios.create({
-      baseURL: 'https://api-ecom.duthanhduoc.com',
+      baseURL: `${import.meta.env.VITE_API_URL as string}`,
       timeout: 10000,
       headers: {
         'Content-Type': 'application/json'
