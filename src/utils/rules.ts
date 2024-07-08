@@ -113,7 +113,8 @@ export const schema = yup.object({
     //   return price_min !== '' || price_max !== ''
     // }
     test: testPriceMinMax
-  })
+  }),
+  name: yup.string().trim().required('Không được bỏ trống tên sản phẩm')
 })
 
 export const loginSchema = schema.omit(['confirm_password'])
