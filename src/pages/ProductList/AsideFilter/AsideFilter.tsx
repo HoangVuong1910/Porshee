@@ -7,10 +7,11 @@ import { Category } from 'src/types/category.type'
 import classNames from 'classnames'
 import InputNumber from 'src/components/InputNumber'
 import { useForm, Controller } from 'react-hook-form'
-import { pick } from 'lodash'
+import { omit, pick } from 'lodash'
 import { Schema, schema } from 'src/utils/rules'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { NoUndefinedField } from 'src/types/utils.type'
+import RatingStars from '../RatingStars/RatingStars'
 
 interface Props {
   queryConfig: QueryConfig
@@ -58,6 +59,14 @@ export default function AsideFilter({ queryConfig, categories }: Props) {
       }).toString()
     })
   })
+
+  const handleResetAllFilters = () => {
+    navigate({
+      pathname: path.home,
+      search: createSearchParams(omit(queryConfig, ['price_min', 'price_max', 'category', 'rating_filter'])).toString()
+    })
+  }
+
   return (
     <div className='py-4'>
       <Link
@@ -202,78 +211,12 @@ export default function AsideFilter({ queryConfig, categories }: Props) {
       </div>
       <div className='bg-gray-300 h-[1px] my-4 '></div>
       <div className='text-sm'>Đánh giá</div>
-      <ul className='my-3'>
-        <li className='py-1 pl-2'>
-          <Link to='' className='flex items-center text-sm'>
-            {Array(5)
-              .fill(0)
-              .map((_, index) => (
-                <svg viewBox='0 0 9.5 8' className='w-4 h-4 mr-1' key={index}>
-                  <defs>
-                    <linearGradient id='ratingStarGradient' x1='50%' x2='50%' y1='0%' y2='100%'>
-                      <stop offset='0' stopColor='#ffca11'></stop>
-                      <stop offset='1' stopColor='#ffad27'></stop>
-                    </linearGradient>
-                    <polygon
-                      id='ratingStar'
-                      points='14.910357 6.35294118 12.4209136 7.66171903 12.896355 4.88968305 10.8823529 2.92651626 13.6656353 2.52208166 14.910357 0 16.1550787 2.52208166 18.9383611 2.92651626 16.924359 4.88968305 17.3998004 7.66171903'
-                    ></polygon>
-                  </defs>
-                  <g fill='url(#ratingStarGradient)' fillRule='evenodd' stroke='none' strokeWidth='1'>
-                    <g transform='translate(-876 -1270)'>
-                      <g transform='translate(155 992)'>
-                        <g transform='translate(600 29)'>
-                          <g transform='translate(10 239)'>
-                            <g transform='translate(101 10)'>
-                              <use stroke='#ffa727' strokeWidth='.5' xlinkHref='#ratingStar'></use>
-                            </g>
-                          </g>
-                        </g>
-                      </g>
-                    </g>
-                  </g>
-                </svg>
-              ))}
-            <span>Trở lên</span>
-          </Link>
-        </li>
-        <li className='py-1 pl-2'>
-          <Link to='' className='flex items-center text-sm'>
-            {Array(5)
-              .fill(0)
-              .map((_, index) => (
-                <svg viewBox='0 0 9.5 8' className='w-4 h-4 mr-1' key={index}>
-                  <defs>
-                    <linearGradient id='ratingStarGradient' x1='50%' x2='50%' y1='0%' y2='100%'>
-                      <stop offset='0' stopColor='#ffca11'></stop>
-                      <stop offset='1' stopColor='#ffad27'></stop>
-                    </linearGradient>
-                    <polygon
-                      id='ratingStar'
-                      points='14.910357 6.35294118 12.4209136 7.66171903 12.896355 4.88968305 10.8823529 2.92651626 13.6656353 2.52208166 14.910357 0 16.1550787 2.52208166 18.9383611 2.92651626 16.924359 4.88968305 17.3998004 7.66171903'
-                    ></polygon>
-                  </defs>
-                  <g fill='url(#ratingStarGradient)' fillRule='evenodd' stroke='none' strokeWidth='1'>
-                    <g transform='translate(-876 -1270)'>
-                      <g transform='translate(155 992)'>
-                        <g transform='translate(600 29)'>
-                          <g transform='translate(10 239)'>
-                            <g transform='translate(101 10)'>
-                              <use stroke='#ffa727' strokeWidth='.5' xlinkHref='#ratingStar'></use>
-                            </g>
-                          </g>
-                        </g>
-                      </g>
-                    </g>
-                  </g>
-                </svg>
-              ))}
-            <span>Trở lên</span>
-          </Link>
-        </li>
-      </ul>
+      <RatingStars queryConfig={queryConfig} />
       <div className='bg-gray-300 h-[1px] my-4 '></div>
-      <Button className='w-full p-2 uppercase text-white bg-orange text-sm hover:bg-orange-80 flex justify-center items-center'>
+      <Button
+        onClick={handleResetAllFilters}
+        className='w-full p-2 uppercase text-white bg-orange text-sm hover:bg-orange-80 flex justify-center items-center'
+      >
         Xóa tất cả
       </Button>
     </div>

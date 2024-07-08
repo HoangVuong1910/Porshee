@@ -32,7 +32,7 @@ export interface ProductListConfig {
   sort_by?: 'createdAt' | 'view' | 'sold' | 'price'
   order?: 'asc' | 'desc'
   exlucde?: string
-  rating_filer?: number | string
+  rating_filter?: number | string
   price_min?: number | string
   price_max?: number | string
   name?: string

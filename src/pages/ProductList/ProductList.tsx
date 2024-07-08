@@ -26,7 +26,7 @@ export default function ProductList() {
       order: queryParams.order,
       price_max: queryParams.price_max,
       price_min: queryParams.price_min,
-      rating_filer: queryParams.rating_filer,
+      rating_filter: queryParams.rating_filter,
       category: queryParams.category
     },
     isUndefined
