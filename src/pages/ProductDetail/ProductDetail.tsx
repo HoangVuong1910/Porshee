@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery } from '@tanstack/react-query'
 import DOMPurify from 'dompurify'
 import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { useParams } from 'react-router-dom'
@@ -8,6 +8,10 @@ import { Product as ProductType, ProductListConfig } from 'src/types/product.typ
 import { formatCurrency, formatNumberToSocialStyle, getIdFromNameId, rateSale } from 'src/utils/utils'
 import Product from '../ProductList/components/Product'
 import Quantity from 'src/components/Quantity'
+import purchaseApi from 'src/apis/purchase.api'
+import { queryClient } from 'src/main'
+import { purchasesStatus } from 'src/constants/purchase'
+import { toast } from 'react-toastify'
 
 export default function ProductDetail() {
   const { nameId } = useParams()
@@ -41,7 +45,14 @@ export default function ProductDetail() {
     staleTime: 3 * 60 * 1000,
     enabled: Boolean(product) // Set this to false to disable automatic refetching when the query mounts or changes query keys.Defaults to true.
   })
-  console.log(productsData)
+  // console.log(productsData)
+
+  // mutation add to cart (thực hiện truy vấn với method post để thêm sp vào giỏ hàng)
+  const addToCartMutation = useMutation({
+    mutationFn: (body: { buy_count: number; product_id: string }) => purchaseApi.addToCart(body)
+  })
+  // const addToCartMutation = useMutation(purchaseApi.addToCart)
+
   //   set ảnh đầu tiên trong mảng images trả về từ api
   useEffect(() => {
     if (product && product.images.length > 0) {
@@ -93,6 +104,19 @@ export default function ProductDetail() {
   // Sự kiện xử lý quantity
   const handleBuyCount = (value: number) => {
     setBuyCount(value)
+  }
+
+  //  xử lý mutate khi click btn add to cart
+  const addToCart = () => {
+    addToCartMutation.mutate(
+      { buy_count: buyCount, product_id: product?._id as string },
+      {
+        onSuccess: (data) => {
+          toast.success(data.data.message, { autoClose: 1500 })
+          queryClient.invalidateQueries({ queryKey: ['purchases', { status: purchasesStatus.inCart }] })
+        }
+      }
+    )
   }
 
   if (!product) return null
@@ -208,7 +232,10 @@ export default function ProductDetail() {
               </div>
               {/* Add cart button & buy button  */}
               <div className='mt-8 flex items-center'>
-                <button className='flex items-center h-12 justify-center rounded-sm border border-orange bg-orange/10 px-5 capitalize text-orange shadow-sm hover:bg-orange/5'>
+                <button
+                  onClick={addToCart}
+                  className='flex items-center h-12 justify-center rounded-sm border border-orange bg-orange/10 px-5 capitalize text-orange shadow-sm hover:bg-orange/5'
+                >
                   <svg
                     xmlns='http://www.w3.org/2000/svg'
                     fill='none'

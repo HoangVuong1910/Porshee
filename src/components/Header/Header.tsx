@@ -2,7 +2,7 @@
 import React, { useState, useRef, useContext } from 'react'
 import { createSearchParams, Link, useNavigate } from 'react-router-dom'
 import Popover from '../Popover'
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQuery } from '@tanstack/react-query'
 import authApi from 'src/apis/auth.api'
 import { AppContext } from 'src/contexts/app.context'
 import path from 'src/constants/path'
@@ -11,10 +11,14 @@ import { useForm } from 'react-hook-form'
 import { schema, Schema } from 'src/utils/rules'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { omit } from 'lodash'
+import { purchasesStatus } from 'src/constants/purchase'
+import purchaseApi from 'src/apis/purchase.api'
+import emptyCart from 'src/assets/images/empty-cart.png'
+import { formatCurrency } from 'src/utils/utils'
 
 type FormData = Pick<Schema, 'name'>
 const nameSchema = schema.pick(['name'])
-
+const MAX_PURCHASES = 5
 export const Header = () => {
   const queryConfig = useQueryConfig()
 
@@ -33,6 +37,16 @@ export const Header = () => {
       setProfile(null)
     }
   })
+
+  /**
+   * Khi chuyển trang thì chỗ này Header chỉ bị re-render chứ không bị unmount - mounting again => query này sẽ không bị inactive => Không bị gọi lại không cần thiết phải set stale: Infinity
+   */
+  const { data: purchasesInCartData } = useQuery({
+    queryKey: ['purchases', { status: purchasesStatus.inCart }],
+    queryFn: () => purchaseApi.getPurchases({ status: purchasesStatus.inCart })
+  })
+  const purchasesInCart = purchasesInCartData?.data.data
+
   const handleLogout = () => {
     logoutMutation.mutate()
   }
@@ -195,91 +209,60 @@ export const Header = () => {
               placement='bottom-end'
               renderPopover={
                 <div className='bg-white relative shadow-md rounded-sm border border-gray-300 max-w-[400px] text-sm px-4 py-2'>
-                  {/* title  */}
-                  <div className='p-2'>
-                    <div className='text-gray-400 capitalize'>sản phẩm mới thêm</div>
-                  </div>
-                  {/* start container list product cart */}
-                  <div className='mt-4'>
-                    {/* Row Item Product Cart  */}
-                    <div className='mt-4 flex'>
-                      <div className='flex-shrink-0'>
-                        <img
-                          src='https://down-vn.img.susercontent.com/file/vn-11134207-7qukw-liwztvi0int83b_tn'
-                          alt='ảnh'
-                          className='w-11 h-11 object-cover'
-                        />
+                  {purchasesInCart ? (
+                    <>
+                      {/* title  */}
+                      <div className='p-2'>
+                        <div className='text-gray-400 capitalize'>Sản phẩm mới thêm</div>
                       </div>
-                      <div className='flex-grow ml-2 overflow-hidden'>
-                        <div className='truncate'>Set Đồ Đôi Couple Áo Phông Nam Váy Thun Nữ màu Xám</div>
+                      {/* start container list product cart */}
+
+                      <div className='mt-5'>
+                        {purchasesInCart.slice(0, MAX_PURCHASES).map((purchase) => (
+                          <>
+                            {/* Row Item Product Cart  */}
+                            <div className='mt-2 py-2 flex hover:bg-gray-100' key={purchase._id}>
+                              <div className='flex-shrink-0'>
+                                <img
+                                  src={purchase.product.image}
+                                  alt={purchase.product.name}
+                                  className='w-11 h-11 object-cover'
+                                />
+                              </div>
+                              <div className='flex-grow ml-2 overflow-hidden'>
+                                <div className='truncate'>{purchase.product.name}</div>
+                              </div>
+                              <div className='ml-2 flex-shrink-0'>
+                                <span className='text-orange'>₫{formatCurrency(purchase.price)} </span>
+                              </div>
+                            </div>
+                          </>
+                        ))}
                       </div>
-                      <div className='ml-2 flex-shrink-0'>
-                        <span className='text-orange'>₫123.500</span>
+                      {/* end container list product cart */}
+                      {/* footer popover cart  */}
+                      <div className='flex mt-6 items-center justify-between'>
+                        <div className='capitalize text-xs text-gray-500'>
+                          {' '}
+                          {purchasesInCart?.length > MAX_PURCHASES ? purchasesInCart?.length - MAX_PURCHASES : ''} Thêm
+                          vào giỏ hàng
+                        </div>
+                        <button className='capitalize bg-orange text-white px-4 py-2 hover:bg-opacity-90 rounded-sm border-none outline-none'>
+                          Xem giỏ hàng
+                        </button>
                       </div>
+                    </>
+                  ) : (
+                    <div className='flex h-[250px] w-[250px] items-center justify-center p-2 '>
+                      <img src={emptyCart} alt='empty cart' className='h-24 w-24 object-fill' />
                     </div>
-                    {/* Row Item Product Cart  */}
-                    <div className='mt-4 flex'>
-                      <div className='flex-shrink-0'>
-                        <img
-                          src='https://down-vn.img.susercontent.com/file/vn-11134207-7qukw-liwztvi0int83b_tn'
-                          alt='ảnh'
-                          className='w-11 h-11 object-cover'
-                        />
-                      </div>
-                      <div className='flex-grow ml-2 overflow-hidden'>
-                        <div className='truncate'>Set Đồ Đôi Couple Áo Phông Nam Váy Thun Nữ màu Xám</div>
-                      </div>
-                      <div className='ml-2 flex-shrink-0'>
-                        <span className='text-orange'>₫123.500</span>
-                      </div>
-                    </div>
-                    {/* Row Item Product Cart  */}
-                    <div className='mt-4 flex'>
-                      <div className='flex-shrink-0'>
-                        <img
-                          src='https://down-vn.img.susercontent.com/file/vn-11134207-7qukw-liwztvi0int83b_tn'
-                          alt='ảnh'
-                          className='w-11 h-11 object-cover'
-                        />
-                      </div>
-                      <div className='flex-grow ml-2 overflow-hidden'>
-                        <div className='truncate'>Set Đồ Đôi Couple Áo Phông Nam Váy Thun Nữ màu Xám</div>
-                      </div>
-                      <div className='ml-2 flex-shrink-0'>
-                        <span className='text-orange'>₫123.500</span>
-                      </div>
-                    </div>
-                    {/* Row Item Product Cart  */}
-                    <div className='mt-4 flex'>
-                      <div className='flex-shrink-0'>
-                        <img
-                          src='https://down-vn.img.susercontent.com/file/vn-11134207-7qukw-liwztvi0int83b_tn'
-                          alt='ảnh'
-                          className='w-11 h-11 object-cover'
-                        />
-                      </div>
-                      <div className='flex-grow ml-2 overflow-hidden'>
-                        <div className='truncate'>Set Đồ Đôi Couple Áo Phông Nam Váy Thun Nữ màu Xám</div>
-                      </div>
-                      <div className='ml-2 flex-shrink-0'>
-                        <span className='text-orange'>₫123.500</span>
-                      </div>
-                    </div>
-                  </div>
-                  {/* end container list product cart */}
-                  {/* footer popover cart  */}
-                  <div className='flex mt-6 items-center justify-between'>
-                    <div className='capitalize text-xs text-gray-500'>Thêm vào giỏ hàng</div>
-                    <button className='capitalize bg-orange text-white px-4 py-2 hover:bg-opacity-90 rounded-sm border-none outline-none'>
-                      Xem giỏ hàng
-                    </button>
-                  </div>
+                  )}
                 </div>
               }
             >
               <Link
                 to={'/'}
-                className='flex justify-center
+                className='flex justify-center relative
             '
               >
                 <svg
@@ -296,6 +279,9 @@ export const Header = () => {
                     d='M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z'
                   />
                 </svg>
+                <span className='absolute top-[-8px] right-[16px] rounded-full bg-white text-xs px-[9px] py-[1px] text-orange'>
+                  {purchasesInCart?.length}
+                </span>
               </Link>
             </Popover>
           </div>
