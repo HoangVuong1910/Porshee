@@ -221,25 +221,23 @@ export const Header = () => {
                       {/* start container list product cart */}
 
                       <div className='mt-5'>
+                        {/* Row Item Product Cart  */}
                         {purchasesInCart.slice(0, MAX_PURCHASES).map((purchase) => (
-                          <>
-                            {/* Row Item Product Cart  */}
-                            <div className='mt-2 py-2 flex hover:bg-gray-100' key={purchase._id}>
-                              <div className='flex-shrink-0'>
-                                <img
-                                  src={purchase.product.image}
-                                  alt={purchase.product.name}
-                                  className='w-11 h-11 object-cover'
-                                />
-                              </div>
-                              <div className='flex-grow ml-2 overflow-hidden'>
-                                <div className='truncate'>{purchase.product.name}</div>
-                              </div>
-                              <div className='ml-2 flex-shrink-0'>
-                                <span className='text-orange'>₫{formatCurrency(purchase.price)} </span>
-                              </div>
+                          <div className='mt-2 py-2 flex hover:bg-gray-100' key={purchase._id}>
+                            <div className='flex-shrink-0'>
+                              <img
+                                src={purchase.product.image}
+                                alt={purchase.product.name}
+                                className='w-11 h-11 object-cover'
+                              />
                             </div>
-                          </>
+                            <div className='flex-grow ml-2 overflow-hidden'>
+                              <div className='truncate'>{purchase.product.name}</div>
+                            </div>
+                            <div className='ml-2 flex-shrink-0'>
+                              <span className='text-orange'>₫{formatCurrency(purchase.price)} </span>
+                            </div>
+                          </div>
                         ))}
                       </div>
                       {/* end container list product cart */}
