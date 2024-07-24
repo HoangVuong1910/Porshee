@@ -14,3 +14,8 @@ export interface Purchase {
   createdAt: string
   updatedAt: string
 }
+
+export interface ExtendedPurchase extends Purchase {
+  disabled: boolean // disabled item khi call api lúc onChange event tăng giảm sl sản phẩm
+  checked: boolean // check & uncheck sp
+}
