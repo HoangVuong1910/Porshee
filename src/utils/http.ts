@@ -4,7 +4,6 @@ import HttpStatusCode from 'src/constants/httpStatusCode.enum'
 import { toast } from 'react-toastify'
 import { AuthResponse } from 'src/types/auth.type'
 import { clearDataLocalStorage, getAccessTokenFromLS, setAccessTokenToLS, setProfileToLS } from './auth'
-import { error } from 'console'
 import path from 'src/constants/path'
 
 class Http {
@@ -57,6 +56,10 @@ class Http {
           const message = data.message || error.message
           console.log(error)
           toast(message)
+        }
+        if (error.response?.status === HttpStatusCode.Unauthorized) {
+          clearDataLocalStorage()
+          // window.location.reload()
         }
 
         return Promise.reject(error)
