@@ -6,6 +6,7 @@ import path from 'src/constants/path'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import authApi from 'src/apis/auth.api'
 import { purchasesStatus } from 'src/constants/purchase'
+import userImage from 'src/assets/images/user.svg'
 
 export default function NavHeader() {
   const queryClient = useQueryClient()
@@ -26,12 +27,12 @@ export default function NavHeader() {
     <div className='flex justify-end'>
       <Popover
         as='div'
-        className='flex items-center py-1 hover:text-white/70 cursor-pointerd'
+        className='cursor-pointerd flex items-center py-1 hover:text-white/70'
         renderPopover={
-          <div className='bg-white relative shadow-md rounded-sm border border-gray-300'>
-            <div className='flex flex-col py-2 px-3'>
-              <button className='py-2 px-3 hover:text-orange border-none outline-none'>Tiếng Việt</button>
-              <button className='py-2 px-3 hover:text-orange border-none outline-none mt-2'>English</button>
+          <div className='relative rounded-sm border border-gray-300 bg-white shadow-md'>
+            <div className='flex flex-col px-3 py-2'>
+              <button className='border-none px-3 py-2 outline-none hover:text-orange'>Tiếng Việt</button>
+              <button className='mt-2 border-none px-3 py-2 outline-none hover:text-orange'>English</button>
             </div>
           </div>
         }
@@ -42,7 +43,7 @@ export default function NavHeader() {
           viewBox='0 0 24 24'
           strokeWidth={1.5}
           stroke='currentColor'
-          className='w-6 h-6'
+          className='h-6 w-6'
         >
           <path
             strokeLinecap='round'
@@ -57,43 +58,39 @@ export default function NavHeader() {
           viewBox='0 0 24 24'
           strokeWidth={1.5}
           stroke='currentColor'
-          className='w-6 h-6'
+          className='h-6 w-6'
         >
           <path strokeLinecap='round' strokeLinejoin='round' d='m19.5 8.25-7.5 7.5-7.5-7.5' />
         </svg>
       </Popover>
       {isAuthenticated && (
         <Popover
-          className='flex items-center py-1 hover:text-white/70 cursor-pointer ml-6'
+          className='ml-6 flex cursor-pointer items-center py-1 hover:text-white/70'
           renderPopover={
-            <div className='bg-white relative shadow-md rounded-sm border border-gray-300'>
+            <div className='relative rounded-sm border border-gray-300 bg-white shadow-md'>
               <Link
                 to={path.profile}
-                className='block py-2 px-3 hover:bg-slate-100 bg-white hover:text-cyan-500 w-full text-left border-none outline-none'
+                className='block w-full border-none bg-white px-3 py-2 text-left outline-none hover:bg-slate-100 hover:text-cyan-500'
               >
                 Tài khoản của tôi
               </Link>
               <Link
                 to={'/'}
-                className='block py-2 px-3 hover:bg-slate-100 bg-white hover:text-cyan-500 w-full text-left'
+                className='block w-full bg-white px-3 py-2 text-left hover:bg-slate-100 hover:text-cyan-500'
               >
                 Đơn mua
               </Link>
               <button
                 onClick={handleLogout}
-                className='block py-2 px-3 hover:bg-slate-100 bg-white hover:text-cyan-500 w-full text-left'
+                className='block w-full bg-white px-3 py-2 text-left hover:bg-slate-100 hover:text-cyan-500'
               >
                 Đăng xuất
               </button>
             </div>
           }
         >
-          <div className='w-6 h-6 mr-2 flex-shrink-0'>
-            <img
-              src='https://scontent.fhan4-1.fna.fbcdn.net/v/t39.30808-1/432771471_1743907719418176_7640784265989700687_n.jpg?stp=dst-jpg_p200x200&_nc_cat=105&ccb=1-7&_nc_sid=5f2048&_nc_ohc=gHO0teLrOMkQ7kNvgE_XaEO&_nc_ht=scontent.fhan4-1.fna&oh=00_AfDP2ftCk7ufz5uDOy1VdfO937ey6s-e22qTcbuvHKNs7g&oe=663E54AF'
-              alt=''
-              className='w-full h-full object-cover rounded-full'
-            />
+          <div className='mr-2 h-6 w-6 flex-shrink-0'>
+            <img src={profile?.avatar || userImage} alt='' className='h-full w-full rounded-full object-cover' />
           </div>
           <div className='text-white'>{profile?.name}</div>
         </Popover>
@@ -103,7 +100,7 @@ export default function NavHeader() {
           <Link to={path.register} className='mx-3 capitalize hover:text-white/70'>
             Đăng ký
           </Link>
-          <div className='border-r-[1px] border-r-white/40 h-4'></div>
+          <div className='h-4 border-r-[1px] border-r-white/40'></div>
           <Link to={path.login} className='mx-3 capitalize hover:text-white/70'>
             Đăng nhập
           </Link>
