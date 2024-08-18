@@ -1,14 +1,14 @@
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useMutation, useQuery } from '@tanstack/react-query'
-import React, { useContext, useEffect, useMemo, useRef, useState } from 'react'
+import React, { useContext, useEffect, useMemo, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
 import userApi from 'src/apis/user.api'
 import Button from 'src/components/Button'
 import DateSelect from 'src/components/DateSelect'
 import Input from 'src/components/Input'
+import InputFile from 'src/components/InputFile'
 import InputNumber from 'src/components/InputNumber'
-import { maxUploadSize } from 'src/constants/file'
 import { AppContext } from 'src/contexts/app.context'
 import { ErrorResponse } from 'src/types/utils.type'
 import { setProfileToLS } from 'src/utils/auth'
@@ -22,7 +22,6 @@ type FormDataError = Omit<FormData, 'date_of_birth'> & {
 const profileSchema = userSchema.pick(['name', 'phone', 'address', 'date_of_birth', 'avatar'])
 
 export default function Profile() {
-  const fileInputRef = useRef<HTMLInputElement>(null)
   const { setProfile } = useContext(AppContext)
   const [file, setFile] = useState<File>()
   const previewImage = useMemo(() => {
@@ -106,18 +105,8 @@ export default function Profile() {
     }
   })
 
-  const onFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const fileFromLocal = event.target.files?.[0] // lấy ra file ảnh từ ng dùng chọn
-    // validate kích thước và type của file image
-    if (fileFromLocal && (fileFromLocal.size >= maxUploadSize || !fileFromLocal.type.includes('image'))) {
-      toast.error('File vượt quá kích thước 1MB hoặc không đúng định dạng .JPEG,.PNG')
-    } else {
-      setFile(fileFromLocal)
-    }
-  }
-
-  const handleUpload = () => {
-    fileInputRef.current?.click()
+  const handleChangeInputFile = (file?: File) => {
+    setFile(file)
   }
 
   return (
@@ -218,7 +207,7 @@ export default function Profile() {
                 className='h-full w-full rounded-full object-cover'
               />
             </div>
-            <input
+            {/* <input
               className='hidden'
               type='file'
               accept='.jpg,.jpeg,.png'
@@ -235,7 +224,8 @@ export default function Profile() {
               onClick={handleUpload}
             >
               Chọn ảnh
-            </button>
+            </button> */}
+            <InputFile onChange={handleChangeInputFile} />
             <div className='mt-3 text-gray-400'>
               <div>Dụng lượng file tối đa 1 MB</div>
               <div>Định dạng:.JPEG, .PNG</div>
