@@ -1,5 +1,6 @@
 import axios, { AxiosError } from 'axios'
 import HttpStatusCode from 'src/constants/httpStatusCode.enum'
+import userImage from 'src/assets/images/user.svg'
 
 export function isAxiosError<T>(error: unknown): error is AxiosError<T> {
   // eslint-disable-next-line import/no-named-as-default-member
@@ -39,3 +40,6 @@ export const getIdFromNameId = (nameId: string) => {
   const arr = nameId.split('-i-')
   return arr[arr.length - 1]
 }
+
+export const getAvatarUrl = (avatarName?: string) =>
+  avatarName ? `${import.meta.env.VITE_API_URL}/images/${avatarName}` : userImage
