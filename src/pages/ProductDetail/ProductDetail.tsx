@@ -15,7 +15,9 @@ import path from 'src/constants/path'
 
 export default function ProductDetail() {
   const queryClient = useQueryClient()
-  const { nameId } = useParams()
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { nameId, productId } = useParams()
+  // const _value = productId.valueOf() // test bắt lỗi với error boundary
   const id = getIdFromNameId(nameId as string)
   // state quản lý số lượng sản phẩm mua
   const [buyCount, setBuyCount] = useState(1)
@@ -138,14 +140,14 @@ export default function ProductDetail() {
             {/* product images  */}
             <div className='col-span-5'>
               <div
-                className='relative w-full pt-[100%] shadow overflow-hidden cursor-zoom-in'
+                className='relative w-full cursor-zoom-in overflow-hidden pt-[100%] shadow'
                 onMouseMove={handleZoom}
                 onMouseLeave={handleRemoveZoomImage}
               >
                 <img
                   src={activeImage}
                   alt={product.name}
-                  className='absolute top-0 left-0 w-full h-full bg-white object-cover pointer-events-none'
+                  className='pointer-events-none absolute left-0 top-0 h-full w-full bg-white object-cover'
                   ref={imageRef}
                 />
               </div>
@@ -174,7 +176,7 @@ export default function ProductDetail() {
                       <img
                         src={img}
                         alt={product.name}
-                        className='absolute top-0 left-0 w-full h-full cursor-pointer bg-white object-cover'
+                        className='absolute left-0 top-0 h-full w-full cursor-pointer bg-white object-cover'
                       />
                       {isActive && <div className='absolute inset-0 border-2 border-orange'></div>}
                     </div>
@@ -244,7 +246,7 @@ export default function ProductDetail() {
               <div className='mt-8 flex items-center'>
                 <button
                   onClick={addToCart}
-                  className='flex items-center h-12 justify-center rounded-sm border border-orange bg-orange/10 px-5 capitalize text-orange shadow-sm hover:bg-orange/5'
+                  className='flex h-12 items-center justify-center rounded-sm border border-orange bg-orange/10 px-5 capitalize text-orange shadow-sm hover:bg-orange/5'
                 >
                   <svg
                     xmlns='http://www.w3.org/2000/svg'
@@ -264,7 +266,7 @@ export default function ProductDetail() {
                 </button>
                 <button
                   onClick={buyNow}
-                  className='ml-4 flex items-center h-12 justify-center min-w-[5rem] rounded-sm bg-orange px-5 capitalize text-white shadow-sm outline-none hover:bg-orange/90'
+                  className='ml-4 flex h-12 min-w-[5rem] items-center justify-center rounded-sm bg-orange px-5 capitalize text-white shadow-sm outline-none hover:bg-orange/90'
                 >
                   Mua ngay
                 </button>
@@ -278,7 +280,7 @@ export default function ProductDetail() {
         <div className='container'>
           <div className='bg-white p-4 shadow'>
             <div className='rounded bg-gray-50 p-4 text-lg capitalize text-slate-700'>Mô tả sản phẩm</div>
-            <div className='mx-4 mt-12 mb-4 text-sm leading-loose'>
+            <div className='mx-4 mb-4 mt-12 text-sm leading-loose'>
               <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(product.description) }}></div>
             </div>
           </div>
@@ -290,7 +292,7 @@ export default function ProductDetail() {
         <div className='container'>
           <div className='uppercase text-gray-400'>Cố thể bạn cũng thích</div>
           {productsData && (
-            <div className='mt-6 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3'>
+            <div className='mt-6 grid grid-cols-2 gap-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6'>
               {productsData.data.data.products.map((product) => (
                 <div className='col-span-1' key={product._id}>
                   {' '}
