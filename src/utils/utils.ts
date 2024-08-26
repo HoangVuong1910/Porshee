@@ -1,14 +1,27 @@
 import axios, { AxiosError } from 'axios'
 import HttpStatusCode from 'src/constants/httpStatusCode.enum'
 import userImage from 'src/assets/images/user.svg'
+import { ErrorResponse } from 'src/types/utils.type'
 
 export function isAxiosError<T>(error: unknown): error is AxiosError<T> {
   // eslint-disable-next-line import/no-named-as-default-member
   return axios.isAxiosError(error)
 }
-
+// kiểm tra lỗi 422
 export function isAxiosUnprocessableEnityError<FormError>(error: unknown): error is AxiosError<FormError> {
   return isAxiosError(error) && error.response?.status === HttpStatusCode.UnprocessableEntity
+}
+// kiểm tra lỗi 401
+export function isAxiosUnauthorizedError<UnauthorizedError>(error: unknown): error is AxiosError<UnauthorizedError> {
+  return isAxiosError(error) && error.response?.status === HttpStatusCode.Unauthorized
+}
+// kiểm tra lỗi 401 trường hợp token hết hạn
+
+export function isAxiosExpiredTokenError<UnauthorizedError>(error: unknown): error is AxiosError<UnauthorizedError> {
+  return (
+    isAxiosUnauthorizedError<ErrorResponse<{ name: string; message: string }>>(error) &&
+    error.response?.data?.data?.name === 'EXPIRED_TOKEN'
+  )
 }
 
 export function formatCurrency(currency: number) {
