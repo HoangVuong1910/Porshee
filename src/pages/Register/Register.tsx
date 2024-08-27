@@ -15,7 +15,7 @@ import { ErrorResponse } from 'src/types/utils.type'
 import { AppContext } from 'src/contexts/app.context'
 import Button from 'src/components/Button'
 import path from 'src/constants/path'
-
+import { Helmet } from 'react-helmet-async'
 // interface Formdata {
 //   email: string
 //   password: string
@@ -83,11 +83,15 @@ export default function Register() {
   // const rules = getRules(getValues)
   return (
     <div className='bg-orange'>
+      <Helmet>
+        <title>Đăng ký</title>
+        <meta name='description' content='Đăng ký tài khoản' />
+      </Helmet>
       <div className='container'>
         {/* <div className='max-w-7xl mx-auto px-4'> */}
-        <div className='grid grid-cols-1 lg:grid-cols-5 py-12 lg:py-32 lg:pr-10'>
+        <div className='grid grid-cols-1 py-12 lg:grid-cols-5 lg:py-32 lg:pr-10'>
           <div className='lg:col-span-2 lg:col-start-4'>
-            <form className='p-10 rounded bg-white shadow-sm' onSubmit={onSubmit}>
+            <form className='rounded bg-white p-10 shadow-sm' onSubmit={onSubmit}>
               <div className='text-2xl'>Đăng ký</div>
               <Input
                 className='mt-8'
@@ -152,16 +156,16 @@ export default function Register() {
               <div className='mt-2'>
                 <Button
                   type='submit'
-                  className='w-full text-center py-4 px-2 uppercase bg-red-500 text-white text-sm hover:bg-red-600'
+                  className='w-full bg-red-500 px-2 py-4 text-center text-sm uppercase text-white hover:bg-red-600'
                   isLoading={registerAccountMutation.isPending}
                   disabled={registerAccountMutation.isPending}
                 >
                   Đăng Ký
                 </Button>
               </div>
-              <div className='flex items-center justify-center mt-8'>
+              <div className='mt-8 flex items-center justify-center'>
                 <span className='[text-gray-400'>Bạn đã có tài khoản?</span>
-                <Link className='text-red-400 ml-1' to={path.login}>
+                <Link className='ml-1 text-red-400' to={path.login}>
                   Đăng nhập
                 </Link>
               </div>
