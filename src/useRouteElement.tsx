@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import React, { lazy, useContext, Suspense } from 'react'
 import { Navigate, Outlet, useRoutes } from 'react-router-dom'
 
@@ -28,9 +29,8 @@ type LoadComponentProps = {
 
 const LoadComponent = ({ component: Component, mode }: LoadComponentProps) => {
   return (
-    //@ts-ignore
     <Suspense fallback={loading()}>
-      {/* @ts-ignore */}
+      {/* @ts-expect-error */}
       <Component mode={mode} />
     </Suspense>
   )

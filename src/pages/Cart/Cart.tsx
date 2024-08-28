@@ -84,7 +84,7 @@ export default function Cart() {
         }) || []
       )
     })
-  }, [purchasesInCart, choosenPurchaseIdFromLocation])
+  }, [purchasesInCart, choosenPurchaseIdFromLocation, setExtendedPurchases])
 
   useEffect(() => {
     return () => {
@@ -192,7 +192,7 @@ export default function Cart() {
                     {extendedPurchases.map((purchase, index) => (
                       <div
                         key={purchase._id}
-                        className='mb-5 first:mt-0 grid grid-cols-12 items-center rounded-sm border border-gray-200 bg-white px-4 py-5 text-center text-sm text-gray-500 '
+                        className='mb-5 grid grid-cols-12 items-center rounded-sm border border-gray-200 bg-white px-4 py-5 text-center text-sm text-gray-500 first:mt-0 '
                       >
                         {/* content left  */}
                         <div className='col-span-6'>
@@ -216,7 +216,7 @@ export default function Cart() {
                                 >
                                   <img src={purchase.product.image} alt={purchase.product.name} />
                                 </Link>
-                                <div className='flex-grow px-2 pt-1 pb-2'>
+                                <div className='flex-grow px-2 pb-2 pt-1'>
                                   <Link
                                     to={`${path.home}${generateNameId({
                                       name: purchase.product.name,
@@ -289,7 +289,7 @@ export default function Cart() {
               </div>
             </div>
             {/* sticky  */}
-            <div className='sticky bottom-0 z-10 mt-8 flex flex-col sm:flex-row sm:items-center rounded-sm  bg-white p-5 shadow border border-gray-100'>
+            <div className='sticky bottom-0 z-10 mt-8 flex flex-col rounded-sm border border-gray-100  bg-white p-5 shadow sm:flex-row sm:items-center'>
               {/* sticky left  */}
               <div className='flex items-center'>
                 <div className='flex flex-shrink-0 items-center justify-center pr-3'>
@@ -309,7 +309,7 @@ export default function Cart() {
               </div>
 
               {/* sticky right  */}
-              <div className='sm:ml-auto flex flex-col sm:flex-row sm:items-center mt-5 sm:mt-0'>
+              <div className='mt-5 flex flex-col sm:ml-auto sm:mt-0 sm:flex-row sm:items-center'>
                 <div>
                   <div className='flex items-center sm:justify-end'>
                     <div>Tổng thanh toán ({checkedPurchasesCount} sản phẩm):</div>
