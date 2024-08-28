@@ -23,7 +23,7 @@ const NotFound = lazy(() => import('./pages/NotFound'))
 const loading = () => <Loading />
 
 type LoadComponentProps = {
-  component: React.LazyExoticComponent<() => JSX.Element>
+  component: React.LazyExoticComponent<() => JSX.Element | null>
   mode?: string
 }
 
@@ -56,23 +56,22 @@ export default function useRouteElement() {
       element: <RejectedRoute />,
       children: [
         {
-          path: path.login,
-          element: (
-            <RegisterLayout>
-              <LoadComponent component={Login} />
-            </RegisterLayout>
-          )
-        },
-        {
-          path: path.register,
-          element: (
-            <RegisterLayout>
-              <LoadComponent component={Register} />
-            </RegisterLayout>
-          )
+          path: '',
+          element: <RegisterLayout />,
+          children: [
+            {
+              path: path.login,
+              element: <LoadComponent component={Login} />
+            },
+            {
+              path: path.register,
+              element: <LoadComponent component={Register} />
+            }
+          ]
         }
       ]
     },
+
     {
       path: '',
       element: <ProtectedRoute />,
@@ -87,23 +86,29 @@ export default function useRouteElement() {
         },
         {
           path: path.user,
-          element: (
-            <MainLayout>
-              <UserLayout />
-            </MainLayout>
-          ),
+          element: <MainLayout />,
           children: [
             {
-              path: path.profile,
-              element: <LoadComponent component={Profile} />
-            },
-            {
-              path: path.changePassword,
-              element: <LoadComponent component={ChangePassword} />
-            },
-            {
-              path: path.historyPuchase,
-              element: <LoadComponent component={HistoryPurchase} />
+              path: '',
+              element: <UserLayout />,
+              children: [
+                {
+                  path: path.profile,
+                  element: <LoadComponent component={Profile} />
+                },
+                {
+                  path: path.changePassword,
+                  element: <LoadComponent component={ChangePassword} />
+                },
+                {
+                  path: path.historyPuchase,
+                  element: (
+                    <Suspense>
+                      <LoadComponent component={HistoryPurchase} />
+                    </Suspense>
+                  )
+                }
+              ]
             }
           ]
         }
@@ -111,34 +116,22 @@ export default function useRouteElement() {
     },
     {
       path: '',
-      element: <ProtectedRoute />,
+      element: <MainLayout />,
       children: [
         {
           path: path.productDetail,
-          element: (
-            <MainLayout>
-              <ProductDetail />
-            </MainLayout>
-          )
+          element: <LoadComponent component={ProductDetail} />
+        },
+        {
+          path: '',
+          index: true,
+          element: <LoadComponent component={ProductList} />
+        },
+        {
+          path: '*',
+          element: <LoadComponent component={NotFound} />
         }
       ]
-    },
-    {
-      path: '',
-      index: true,
-      element: (
-        <MainLayout>
-          <ProductList />
-        </MainLayout>
-      )
-    },
-    {
-      path: '*',
-      element: (
-        <MainLayout>
-          <NotFound />
-        </MainLayout>
-      )
     }
   ])
   return routeElement
