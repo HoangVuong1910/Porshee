@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import { useContext } from 'react'
 import Popover from '../Popover'
 import { AppContext } from 'src/contexts/app.context'
 import { Link } from 'react-router-dom'

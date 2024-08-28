@@ -1,12 +1,11 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { useContext } from 'react'
+import { useContext } from 'react'
 
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
-import * as yup from 'yup'
 import { Link, useNavigate } from 'react-router-dom'
 import Input from 'src/components/Input'
-import { Schema, getRules, schema } from 'src/utils/rules'
+import { Schema, schema } from 'src/utils/rules'
 import { useMutation } from '@tanstack/react-query'
 import authApi from 'src/apis/auth.api'
 import { omit } from 'lodash'
@@ -30,11 +29,11 @@ export default function Register() {
   const {
     register,
     handleSubmit,
-    watch,
+
     setError,
-    getValues,
+
     formState: { errors }
-  } = useForm<Schema>({
+  } = useForm<FormData>({
     resolver: yupResolver(registerSchema)
   })
 

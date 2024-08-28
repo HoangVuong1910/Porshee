@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { InputHTMLAttributes, useState } from 'react'
+import { InputHTMLAttributes, useState } from 'react'
 import { RegisterOptions, UseFormRegister } from 'react-hook-form'
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {

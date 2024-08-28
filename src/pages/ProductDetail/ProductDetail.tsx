@@ -18,7 +18,7 @@ import { convert } from 'html-to-text'
 export default function ProductDetail() {
   const queryClient = useQueryClient()
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { nameId, productId } = useParams()
+  const { nameId } = useParams()
   // const _value = productId.valueOf() // test bắt lỗi với error boundary
   const id = getIdFromNameId(nameId as string)
   // state quản lý số lượng sản phẩm mua

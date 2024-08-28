@@ -1,4 +1,4 @@
-import React from 'react'
+// import React from 'react'
 import { createSearchParams, Link, useNavigate } from 'react-router-dom'
 import Button from 'src/components/Button'
 import path from 'src/constants/path'

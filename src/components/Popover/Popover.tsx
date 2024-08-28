@@ -18,7 +18,7 @@ import {
   safePolygon,
   type Placement
 } from '@floating-ui/react'
-import { AnimatePresence, motion } from 'framer-motion'
+import { AnimatePresence } from 'framer-motion'
 
 interface Props {
   children: React.ReactNode
