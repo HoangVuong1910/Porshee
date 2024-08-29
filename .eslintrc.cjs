@@ -2,17 +2,7 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const path = require('path')
 module.exports = {
-  extends: [
-    'eslint:recommended',
-    'plugin:react/recommended',
-    'plugin:import/recommended',
-    'plugin:react-hooks/recommended',
-    'plugin:jsx-a11y/recommended',
-    'plugin:@typescript-eslint/recommended',
-    'plugin:react/jsx-runtime',
-    'eslint-config-prettier',
-    'prettier'
-  ],
+  extends: ['eslint:recommended', 'plugin:react/recommended', 'plugin:import/recommended', 'plugin:react-hooks/recommended', 'plugin:jsx-a11y/recommended', 'plugin:@typescript-eslint/recommended', 'plugin:react/jsx-runtime', 'eslint-config-prettier', 'prettier', 'plugin:storybook/recommended'],
   plugins: ['prettier'],
   settings: {
     react: {
