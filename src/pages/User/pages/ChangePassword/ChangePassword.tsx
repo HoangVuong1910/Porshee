@@ -10,7 +10,7 @@ import { ErrorResponse, NoUndefinedField } from 'src/types/utils.type'
 import { userSchema, UserSchema } from 'src/utils/rules'
 import { ObjectSchema } from 'yup'
 import { isAxiosUnprocessableEnityError } from 'src/utils/utils'
-import { omit } from 'lodash'
+import omit from 'lodash/omit'
 
 type FormData = NoUndefinedField<Pick<UserSchema, 'password' | 'new_password' | 'confirm_password'>>
 const passwordSchema = userSchema.pick(['password', 'new_password', 'confirm_password'])
